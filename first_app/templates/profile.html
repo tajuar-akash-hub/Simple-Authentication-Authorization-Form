@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<h1>This is profile page</h1>
+<h1>Welcome ---------- {{user}}</h1>
+<p>Change your pass <a href="{% url 'change_pass' %}">Change pass</a></p>
+<p>Change your pass without old password <a href="{% url 'change_pass2' %}">Change pass without old pass</a></p>
+
+<!-- messages to the user Starts -------------------------- -->
+{% if messages  %}
+<h1>Account updated Succesfully</h1>
+{% endif %}
+<!-- Messages to the user ends here ---------- -->
+
+<!-- user change form starts here --------- -->
+{% if form.non_field_errors %}
+{% for er in form.non_field_errors %}
+<p class="bg-primary" style="margin: auto; text-align: center;">{{er}}</p>
+{% endfor %}
+{% endif %}
+
+{% load crispy_forms_tags %}
+
+<form method="post" action="" style="width: 50%; margin: auto;" novalidate>
+  {% csrf_token %}
+  {% for fm  in form %}
+  <!-- {{fm | as_crispy_field }} -->
+  {{fm.label_tag}}
+  {{fm}}
+  {{fm.errors |striptags}}
+  {% endfor %}
+  <br>
+    <button class="btn btn-primary" type="submit">Update info</button>
+</form>
+
+
+
+
+<!-- user change form ends  here --------- -->
+    
+{% endblock body %}
